@@ -18,11 +18,25 @@ router.post('/login', async(req,res)=>{
     try {
         const user = await AuthService.login(email,password)
         console.log("usuario",user)
-        const userRole ={
+
+       let userRole;
+
+       if(user.role === 'admin'){
+        userRole = {
             ...user,
-            role:'users',
-            permissions: ['users:me']
+            role: 'admin',
+            permissions: ['admin:yo']
+        };}  else {
+            userRole = {
+                role: 'users',
+                permissions: ['users:me']
+            }
         }
+        // const userRole ={
+        //     ...user,
+        //     role:'users',
+        //     permissions: ['users:me']
+        // }
 
         const token = jwt.sign({
             data: userRole,
@@ -31,8 +45,10 @@ router.post('/login', async(req,res)=>{
 
         res.send({
             _id: user._id,
-            token
+            token,
+            role: user.role
         })
+
     } catch(error){
         console.error(error)
         res.status(401).send({message: error.message})
