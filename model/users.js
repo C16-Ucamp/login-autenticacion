@@ -14,7 +14,8 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        require: true
+        require: true,
+        unique: true
     },
     password: {
         type: String,
@@ -28,7 +29,8 @@ const userSchema = new Schema({
     timestamps: true
 })
 
-userSchema.plugin(uniqueValidator, {message: 'El email ya existe'})
+
+userSchema.plugin(uniqueValidator, {message: "El email ya existe"})
 
 
 userSchema.pre('save', function(next){

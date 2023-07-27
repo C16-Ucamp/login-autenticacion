@@ -10,12 +10,16 @@ const adminRouter = require('./admin')
 
 const productRouter = require('./products')
 
+const passwordRouter = require('./passwordChange')
+
 router.use('/products', productRouter)
 
 router.use('/auth', authRouter);
 router.use('/register',registerRouter  )
+
 router.use(authMiddleware)
 router.use('/users', userRouter);
 router.use('/admin', adminRouter); 
+router.use('/pass', passwordRouter); 
 
 module.exports = router;
